@@ -2,6 +2,8 @@
 
 **Intelligent, privacy-first real-time voice OS agent for sub-second actions and navigation.**
 
+note-This is a work in progress and you are likely to find errors while running, for now- however, some functionality is great.
+
 Hold **Right Option (⌥)** and speak to control your computer or dictate text into any app. You can also use the local Web UI.
 
 ## How it works
