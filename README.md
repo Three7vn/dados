@@ -10,8 +10,7 @@ Hold **Right Option (⌥)** and speak to control your computer or dictate text i
 
 1. Hold down the **Right Option (⌥)** key - to the right of spacebar
 2. Speak naturally
-3. Release **Right Option** key
-4. Text appears in your active app
+3. Release **Right Option** key when done (or access via web UI).
 
 ## Features
 
