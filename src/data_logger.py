@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 class DataLogger:
-    def __init__(self, base_dir="training/data"):
+    def __init__(self, base_dir="data"):
         self.base_dir = Path(base_dir)
         self.audio_dir = self.base_dir / "audio"
         self.csv_file = self.base_dir / "transcriptions.csv"

@@ -1,0 +1,37 @@
+# VLM Prompts (Vision-Language Model) - Example Template
+
+Purpose: infer UI context from screenshots and propose click coordinates for voice-controlled actions.
+
+## System Prompt Template
+
+- You analyze a desktop screenshot and return one or more screen targets to satisfy the user instruction.
+- Output a JSON object with fields: `targets` (list of {x, y, label, confidence}), and optional `notes`.
+- Coordinates are absolute pixel positions relative to the screenshot resolution.
+- Be conservative: if uncertain, return an empty list.
+
+## Verification Loop Template
+
+- Before clicking, a fresh screenshot is captured for validation.
+- You validate that the proposed target still exists within a small radius.
+- If validation fails, return no targets to prevent incorrect clicks.
+
+## Example Usage
+
+Instruction: "Click the Send button"
+Model output:
+{
+  "targets": [ {"x": 320, "y": 180, "label": "Send", "confidence": 0.92} ],
+  "notes": "Send button in email compose window"
+}
+
+## Context about available actions
+
+- After your JSON output is parsed, the agent will use mouse control to execute the action:
+  - Set position: `mouse.position = (x, y)`
+  - Relative move: `mouse.move(dx, dy)`
+  - Click: `mouse.click(Button.left, count)`
+  - Scroll: `mouse.scroll(dx, dy)`
+- Screenshots are captured and stored under `data/screenshots/`.
+- Images are provided as local file paths (e.g., `file:///path/to/screenshot.webp`).
+- Be conservative: if target is ambiguous or low confidence, return an empty list.
+- Consider accessibility and ensure targets are clearly identifiable UI elements.

@@ -1,5 +1,5 @@
 """
-Text injection - ultra-fast typing, minimal delays
+Text injection
 """
 
 from pynput.keyboard import Controller, Key

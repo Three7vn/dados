@@ -1,43 +1,43 @@
 #!/bin/bash
 #
-# Heve AI Service Control Script
-# Manage the auto-start dictation service
+# Dados Service Control Script
+# Manage the auto-start voice agent service
 #
 
-SERVICE_NAME="com.heveai.dictation"
+SERVICE_NAME="com.dados.agent"
 PLIST_PATH="$HOME/Library/LaunchAgents/$SERVICE_NAME.plist"
 
 case "$1" in
     start)
-        echo "[+] Starting Heve AI service..."
+        echo "[+] Starting Dados service..."
         launchctl load "$PLIST_PATH"
         echo "[✓] Service started"
         ;;
     stop)
-        echo "[-] Stopping Heve AI service..."
+        echo "[-] Stopping Dados service..."
         launchctl unload "$PLIST_PATH"
         echo "[✓] Service stopped"
         ;;
     restart)
-        echo "[~] Restarting Heve AI service..."
+        echo "[~] Restarting Dados service..."
         launchctl unload "$PLIST_PATH"
         sleep 1
         launchctl load "$PLIST_PATH"
         echo "[✓] Service restarted"
         ;;
     status)
-        echo "[i] Heve AI service status:"
+        echo "[i] Dados service status:"
         if launchctl list | grep -q "$SERVICE_NAME"; then
             PID=$(launchctl list | grep "$SERVICE_NAME" | awk '{print $1}')
             echo "[✓] Running (PID: $PID)"
-            echo "[*] Ready for dictation - Hold Right Option (⌥) and speak!"
+            echo "[*] Ready for voice commands - Hold Right Option (⌥) and speak!"
         else
             echo "[X] Not running"
         fi
         ;;
     logs)
         echo "[i] Recent logs:"
-        tail -n 20 logs/heve.log 2>/dev/null || echo "No logs found"
+        tail -n 20 logs/dados.log 2>/dev/null || echo "No logs found"
         ;;
     disable)
         echo "[-] Disabling auto-start..."
@@ -46,7 +46,7 @@ case "$1" in
         echo "[✓] Auto-start disabled"
         ;;
     *)
-        echo "Heve AI Service Control"
+        echo "Dados Service Control"
         echo "Usage: $0 {start|stop|restart|status|logs|disable}"
         echo ""
         echo "Commands:"

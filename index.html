@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dados — Web UI</title>
+  <link rel="stylesheet" href="global.styles.css" />
+</head>
+<body>
+  <h1>Dados</h1>
+  <main class="container">
+    <div class="content-area">
+      <div class="button-container">
+        <object id="startBtn" class="capture-icon" data="assets/thinking-blob.svg" type="image/svg+xml">
+          <img src="assets/thinking-blob.svg" alt="Start Listening" />
+        </object>
+      </div>
+      <p class="instruction-text">Speak your thoughts into reality</p>
+    </div>
+
+    <section>
+      <h2>Speech Input</h2>
+      <div id="speechBox" class="box" aria-live="polite">
+        <!-- Dynamic speech entries will be populated here -->
+      </div>
+    </section>
+
+    <section>
+      <h2>Action Log</h2>
+      <div id="logBox" class="box" aria-live="polite">
+        <!-- Dynamic action log entries will be populated here -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

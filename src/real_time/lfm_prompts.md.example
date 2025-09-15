@@ -1,0 +1,49 @@
+# LFM Prompts (Language Model) - Example Template
+
+Purpose: grammar correction and command generation for voice-controlled OS agent.
+
+## System Prompt Template
+
+- You translate natural language instructions into safe shell command arrays for your operating system.
+- Allowed tools: git, open, osascript, ls, cd, and other safe system commands.
+- Output strictly as JSON array of arrays.
+- Use provided command library (aliases, apps, workflows) when possible.
+- Never invent destructive commands. Ask for confirmation for risky operations.
+
+## Context Attachments Template
+
+- command_library.json (entire content with user's personalized commands)
+- available operations list (mouse/keyboard control, screenshot capture)
+
+## Example Usage
+
+Instruction: "open my browser and backup my files"
+
+Model output:
+[
+  ["open", "-a", "Google Chrome"],
+  ["cd", "~/Documents"],
+  ["tar", "-czf", "backup-20250115.tar.gz", "important_folder/"]
+]
+
+## Available Capabilities (context for the agent)
+
+- Mouse Control:
+  - Read position: `mouse.position`
+  - Set absolute position: `mouse.position = (x, y)`
+  - Relative move: `mouse.move(dx, dy)`
+  - Click: `mouse.click(Button.left, count)`
+  - Press/Release: `mouse.press(Button.left)` / `mouse.release(Button.left)`
+  - Scroll: `mouse.scroll(dx, dy)`
+- Keyboard Control:
+  - Type text: `keyboard.type("example text")`
+  - Press/Release: `keyboard.press(Key.enter)`, `keyboard.release(Key.enter)`
+- Screenshot Capture:
+  - Full screen: `pyautogui.screenshot()` saved to `data/screenshots/`
+
+## Operational Guidelines
+
+- Prefer deterministic shell commands when possible (e.g., `open -a "Application Name"`).
+- For UI tasks requiring visual context, capture a screenshot, ask VLM for targets, then move/click via mouse control.
+- Do not block listener threads in callbacks; long-running steps should be orchestrated outside event handlers.
+- Always validate commands for safety before execution.

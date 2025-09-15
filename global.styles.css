@@ -1,0 +1,119 @@
+body { 
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
+  margin: 0; 
+  padding: 0; 
+  background: #f8f9fa;
+}
+
+.container { 
+  max-width: 800px; 
+  margin: 2rem auto; 
+  padding: 0 1rem; 
+  text-align: center;
+}
+
+h1 { 
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  margin: 0; 
+  color: #2c3e50;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.content-area {
+  margin-top: 4rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.capture-icon { 
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+}
+
+.capture-icon:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 12px rgba(52, 152, 219, 0.2));
+}
+
+.capture-icon.pulsing {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.box { 
+  border: 1px solid #e1e8ed; 
+  border-radius: 8px; 
+  padding: 0.5rem; 
+  min-height: 60px; 
+  background: white;
+  text-align: left;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  font-size: 0.875rem;
+}
+
+section { 
+  margin: 3rem auto 0 auto;
+  max-width: 60%;
+}
+
+.instruction-text {
+  text-align: center;
+  color: #95a5a6;
+  font-size: 0.875rem;
+  font-weight: 300;
+  margin: 1rem 0 0 0;
+}
+
+h2 {
+  color: #7f8c8d;
+  font-weight: 300;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Demo content styles */
+.speech-entry, .log-entry {
+  margin: 8px 0;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+.timestamp {
+  color: #666;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.8em;
+  margin-right: 8px;
+}
+
+.action {
+  font-weight: 600;
+  margin-right: 8px;
+  color: #333;
+}
+
+.text {
+  font-style: italic;
+  color: #444;
+}
+
+.details {
+  color: #555;
+}

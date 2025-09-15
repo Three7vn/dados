@@ -1,0 +1,35 @@
+{
+  "aliases": {
+    "gmail_compose": "https://mail.google.com/mail/u/0/#inbox?compose=new",
+    "favorite_video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "research_site": "https://perplexity.ai"
+  },
+  "apps": {
+    "chrome": "open -a 'Google Chrome'",
+    "vscode": "open -a 'Visual Studio Code'",
+    "finder": "open -a 'Finder'",
+    "terminal": "open -a 'Terminal'"
+  },
+  "workflows": {
+    "push_code": [
+      "cd /path/to/your/project",
+      "git add -A",
+      "git commit -m 'Voice agent commit'",
+      "git push"
+    ],
+    "backup_files": [
+      "cd ~/Documents",
+      "tar -czf backup-$(date +%Y%m%d).tar.gz important_folder/"
+    ]
+  },
+  "email_presets": {
+    "work_contact": {
+      "to": "colleague@company.com",
+      "subject": "Project Update"
+    },
+    "personal_contact": {
+      "to": "friend@email.com", 
+      "subject": "Quick Question"
+    }
+  }
+}

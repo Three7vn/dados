@@ -33,8 +33,20 @@ Thumbs.db
 *.log
 logs/
 
-# Training data (personal audio/transcriptions)
-training/data/
+# Local data (personal audio/screenshots/CSV)
+data/
+data/audio/*
+data/screenshots/*
+data/csv/*
+
+# Configuration files (keep .example versions)
+src/dictionary/command_library.json
+src/real_time/lfm_prompts.md
+src/real_time/vlm_prompts.md
+data/csv/events.csv
 
 # System-specific files
-com.heveai.dictation.plist 
+com.dados.agent.plist
+
+# Tests directory (contains test files and temporary data)
+tests/

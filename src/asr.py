@@ -1,21 +1,19 @@
 """
-Speech recognition using faster-whisper (OpenAI Whisper)
+Speech recognition using Whisper
 """
 
 import whisper
+try:
+    import torch  # optional; whisper depends on it but guard just in case
+except Exception:  # pragma: no cover
+    torch = None
 import numpy as np
-import torch
 from pathlib import Path
-import sys
-
-# Add the training directory to the path for imports
-sys.path.append(str(Path(__file__).parent.parent / "training"))
 from data_logger import DataLogger
-from dictionary_corrector import DictionaryCorrector
 
 
 class ASREngine:
-    def __init__(self, model_size="base", enable_logging=True, enable_dictionary=True):
+    def __init__(self, model_size="base", enable_logging=True):
         """
         Initialize Whisper model
         Model sizes: tiny, base, small, medium, large
@@ -25,17 +23,14 @@ class ASREngine:
             print(f"Loading Whisper model ({model_size})...")
             self.model = whisper.load_model(model_size)
             self.sample_rate = 16000
+            # Use FP16 only if CUDA is available to avoid CPU warning
+            self._use_fp16 = bool(getattr(torch, "cuda", None) and torch.cuda.is_available())
             print(f"Loaded Whisper model ({model_size})")
             
-            # Initialize data logger
+            # Initialize data logger (legacy; may be replaced by Dados event logger)
             self.logger = DataLogger() if enable_logging else None
             if self.logger:
                 print("📝 Data logging enabled - saving audio/transcriptions for training")
-            
-            # Initialize dictionary corrector
-            self.dictionary = DictionaryCorrector() if enable_dictionary else None
-            if self.dictionary:
-                print("📚 Dictionary correction enabled - real-time vocabulary fixes")
                 
         except Exception as e:
             print(f"Could not load Whisper model: {e}")
@@ -51,25 +46,14 @@ class ASREngine:
             audio_np = self._bytes_to_numpy(audio_data)
             
             # Transcribe with Whisper
-            result = self.model.transcribe(audio_np, language="en")
-            raw_text = result["text"].strip()
+            result = self.model.transcribe(audio_np, language="en", fp16=self._use_fp16)
+            text = result["text"].strip()
             
-            # Apply real-time dictionary corrections
-            corrected_text = raw_text
-            if self.dictionary:
-                corrected_text = self.dictionary.apply_real_time_corrections(raw_text)
-                
-                # If corrections were made, suggest adding to dictionary
-                if corrected_text != raw_text:
-                    suggestions = self.dictionary.suggest_corrections(raw_text, corrected_text)
-                    for wrong, correct in suggestions:
-                        print(f"💡 Dictionary suggestion: '{wrong}' → '{correct}'")
+            # Log the audio and transcription (optional)
+            if self.logger and text:
+                self.logger.save_transcription(audio_data, text, self.sample_rate)
             
-            # Log the audio and transcription for training
-            if self.logger and corrected_text:
-                self.logger.save_transcription(audio_data, corrected_text, self.sample_rate)
-            
-            return corrected_text
+            return text
             
         except Exception as e:
             print(f"❌ Transcription error: {e}")
